@@ -1,0 +1,20 @@
+{
+  "TOR1E-NPC-PARSER": {
+    "dialog": {
+      "instruction": "Paste text here and click Go:"
+    },
+    "notifications": {
+      "nameNotFound": "Could not parse Name",
+      "descriptionNotFound": "Could not parse description",
+      "attributeLevelNotFound": "Could not parse Attribute Level.",
+      "enduranceNotFound": "Could not parse Endurance.",
+      "hateNotFound": "Could not parse Hate/Resolve.",
+      "parryNotFound": "Could not parse Parry.",
+      "shieldNotFound": "No shield was found for this creature. Please make sure this adversary does not carry a shield.",
+      "armourNotFound": "Could not parse Armour.",
+      "weaponSkillsNotFound": "Could not parse Weapon Skills.",
+      "specialAbilityNotFound": "No Special Abilities were found for this creature. Please double check to make sure this is correct.",
+      "specialAbilitiesByType": "was automatically added without description based on creature type."
+    }
+  }
+}
