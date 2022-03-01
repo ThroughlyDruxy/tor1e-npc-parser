@@ -166,28 +166,28 @@ export async function tor1eParser(input) {
       damage: 4,
       edge: 10,
       injury: 12,
-      calledShot: 'disarm',
+      calledShot: 'tor1e.weapons.calledShots.disarm',
     },
     bowOfHorn: {
       name: 'Bow of horn',
       damage: 4,
       edge: 10,
       injury: 12,
-      calledShot: 'Poison',
+      calledShot: 'tor1e.weapons.calledShots.poison',
     },
     broadbladedSword: {
       name: 'Broad-bladed spear',
       damage: 5,
       edge: 10,
       injury: 14,
-      calledShot: 'Poison',
+      calledShot: 'tor1e.weapons.calledShots.poison',
     },
     broadheadedSpear: {
       name: 'Broad-headed spear',
       damage: 5,
       edge: 10,
       injury: 12,
-      calledShot: 'Pierce',
+      calledShot: 'tor1e.weapons.calledShots.pierce',
     },
     jaggedKnife: {
       name: 'Jagged knife',
@@ -201,21 +201,21 @@ export async function tor1eParser(input) {
       damage: 7,
       edge: 10,
       injury: 14,
-      calledShot: 'Break shield',
+      calledShot: 'tor1e.weapons.calledShots.breakShield',
     },
     orcAxe: {
       name: 'Orc-axe',
       damage: 5,
       edge: 11,
       injury: 16,
-      calledShot: 'Break shield',
+      calledShot: 'tor1e.weapons.calledShots.breakShield',
     },
     spear: {
       name: 'Spear',
       damage: 4,
       edge: 9,
       injury: 12,
-      calledShot: 'Pierce',
+      calledShot: 'tor1e.weapons.calledShots.pierce',
     },
   };
 
@@ -230,25 +230,45 @@ export async function tor1eParser(input) {
       const skill = element.match(/\d+/)[0];
 
       Object.values(adversaryWeapons).forEach(element => {
-        const name = element.name;
-        const damage = element.damage;
-        const edge = element.edge;
-        const injury = element.injury;
-        const calledShot = element.calledShot;
-
-        actor.createEmbeddedDocuments('Item', [
-          buildItem(
-            name,
-            'weapon',
-            '',
-            Number(skill),
-            damage,
-            injury,
-            0,
-            calledShot
-          ),
-        ]);
+        if (name === element.name) {
+          const damage = element.damage;
+          const edge = element.edge;
+          const injury = element.injury;
+          const calledShot = element.calledShot;
+          actor.createEmbeddedDocuments('Item', [
+            buildItem(
+              name,
+              'weapon',
+              '',
+              Number(skill),
+              damage,
+              injury,
+              0,
+              calledShot,
+              edge
+            ),
+          ]);
+        }
       });
+
+      // const name = element.name;
+      // const damage = element.damage;
+      // const edge = element.edge;
+      // const injury = element.injury;
+      // const calledShot = element.calledShot;
+
+      // actor.createEmbeddedDocuments('Item', [
+      //   buildItem(
+      //     name,
+      //     'weapon',
+      //     '',
+      //     Number(skill),
+      //     damage,
+      //     injury,
+      //     0,
+      //     calledShot
+      //   ),
+      // ]);
     });
   } catch (error) {
     console.error(error);
@@ -289,7 +309,6 @@ export async function tor1eParser(input) {
       .replace(/SPECIAL ABILITIES\n/is, '')
       .replace(/\n/, ' ')
       .split(' '); // splits it into individual words.
-    console.log(specialAbilitiesArr);
 
     for (let i = 0; i < specialAbilitiesArr.length; i++) {
       const abilitySubstring = specialAbilitiesArr[i];

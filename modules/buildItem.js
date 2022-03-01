@@ -144,6 +144,8 @@ export function buildItem(
     weaponData.data.skill.value = skill;
     weaponData.data.damage.value = damage;
     weaponData.data.injury.value = injury;
+    weaponData.data.group.value = calledShot;
+    weaponData.data.edge.value = edge;
     // Choose correct image and group
     if (/axe|cudgel|knife|club|hammer/i.test(name)) {
       weaponData.img =
