@@ -33,6 +33,26 @@ export async function tor1eParser(input) {
       parry: {
         value: 0,
       },
+      skills: {
+        personality: {
+          value: 0,
+        },
+        movement: {
+          value: 0,
+        },
+        perception: {
+          value: 0,
+        },
+        survival: {
+          value: 0,
+        },
+        custom: {
+          value: 0,
+        },
+        vocation: {
+          value: 0,
+        },
+      },
     },
     token: {
       img: 'systems/tor1e/assets/images/tokens/token_adversary.png',
@@ -52,8 +72,8 @@ export async function tor1eParser(input) {
   let originalText = input.find('textarea#text-input').val();
 
   ///// NAME /////
-  const [nameFirst] = originalText.split('\n');
   console.log(`TOR 1E NPC PARSER | parsing Name`);
+  const [nameFirst] = originalText.split('\n');
   let nameArray = nameFirst.split(' ');
   for (let i = 0; i < nameArray.length; i++) {
     nameArray[i] =
@@ -137,9 +157,7 @@ export async function tor1eParser(input) {
     }
     const armour = parryShieldArmour.match(/\dd/)[0].replace(/d/, '');
     npcData.data.parry.value = Number(parry);
-
     npcData.data.parry.value = Number(parry);
-
     actor.createEmbeddedDocuments('Item', [
       buildItem('Armour', 'armour', '', 0, 0, 0, Number(armour)),
     ]);
@@ -153,73 +171,185 @@ export async function tor1eParser(input) {
 
   ///// SKILLS /////
   try {
+    // Personality
+    npcData.data.skills.personality.value = Number(
+      originalText.match(/personality, \d/i)[0].replace(/personality, /i, '')
+    );
+    // Movement
+    npcData.data.skills.movement.value = Number(
+      originalText.match(/movement, \d/i)[0].replace(/movement, /i, '')
+    );
+    // Perception
+    npcData.data.skills.perception.value = Number(
+      originalText.match(/perception, \d/i)[0].replace(/perception, /i, '')
+    );
+    // Survival
+    npcData.data.skills.survival.value = Number(
+      originalText.match(/survival, \d/i)[0].replace(/survival, /i, '')
+    );
+    // Custom
+    npcData.data.skills.custom.value = Number(
+      originalText.match(/custom, \d/i)[0].replace(/custom, /i, '')
+    );
+    // Vocation
+    npcData.data.skills.vocation.value = Number(
+      originalText.match(/vocation, \d/i)[0].replace(/vocation, /i, '')
+    );
   } catch (error) {
     console.error(error);
+    ui.notifications.warn(
+      game.i18n.localize('TOR1E-NPC-PARSER.notifications.skillsNotFound')
+    );
   }
 
   ///// WEAPON SKILLS /////
   console.log(`TOR 1E NPC PARSER | parsing Weapon Skills`);
 
   const adversaryWeapons = {
-    bentSword: {
-      name: 'Bent sword',
-      damage: 4,
-      edge: 10,
-      injury: 12,
-      calledShot: 'tor1e.weapons.calledShots.disarm',
+    // Orc Weapons
+    orc: {
+      bentSword: {
+        name: 'Bent sword',
+        damage: 4,
+        edge: 10,
+        injury: 12,
+        calledShot: 'tor1e.weapons.calledShots.disarm',
+      },
+      bowOfHorn: {
+        name: 'Bow of horn',
+        damage: 4,
+        edge: 10,
+        injury: 12,
+        calledShot: 'tor1e.weapons.calledShots.poison',
+      },
+      broadbladedSword: {
+        name: 'Broad-bladed spear',
+        damage: 5,
+        edge: 10,
+        injury: 14,
+        calledShot: 'tor1e.weapons.calledShots.poison',
+      },
+      broadheadedSpear: {
+        name: 'Broad-headed spear',
+        damage: 5,
+        edge: 10,
+        injury: 12,
+        calledShot: 'tor1e.weapons.calledShots.pierce',
+      },
+      jaggedKnife: {
+        name: 'Jagged knife',
+        damage: 3,
+        edge: 11,
+        injury: 14,
+        calledShot: '-',
+      },
+      heavyScimitar: {
+        name: 'Heavy scimitar (2h)',
+        damage: 7,
+        edge: 10,
+        injury: 14,
+        calledShot: 'tor1e.weapons.calledShots.break-shield',
+      },
+      orcAxe: {
+        name: 'Orc-axe',
+        damage: 5,
+        edge: 11,
+        injury: 16,
+        calledShot: 'tor1e.weapons.calledShots.break-shield',
+      },
+      spear: {
+        name: 'Spear',
+        damage: 4,
+        edge: 9,
+        injury: 12,
+        calledShot: 'tor1e.weapons.calledShots.pierce',
+      },
     },
-    bowOfHorn: {
-      name: 'Bow of horn',
-      damage: 4,
-      edge: 10,
-      injury: 12,
-      calledShot: 'tor1e.weapons.calledShots.poison',
+    // Spider Weapons
+    spider: {
+      ensnare: {
+        name: 'Ensnare',
+        damage: 0,
+        edge: 0,
+        injury: 0,
+        calledShot: '',
+      },
+      sting: {
+        name: 'Sting',
+        damage: npcData.data.attributeLevel.value,
+        edge: 10,
+        injury: 14,
+        calledShot: 'tor1e.weapons.calledShots.poison',
+      },
     },
-    broadbladedSword: {
-      name: 'Broad-bladed spear',
-      damage: 5,
-      edge: 10,
-      injury: 14,
-      calledShot: 'tor1e.weapons.calledShots.poison',
+    // Troll Weapons
+    troll: {
+      bite: {
+        name: 'Bite',
+        damage: 5,
+        edge: 11,
+        injury: 14,
+        calledShot: '',
+      },
+      club: {
+        name: 'Club',
+        damage: 6,
+        edge: 10,
+        injury: 14,
+        calledShot: '',
+      },
+      crush: {
+        name: 'Crush',
+        damage: npcData.data.attributeLevel.value,
+        edge: 11,
+        injury: 12,
+        calledShot: '',
+      },
+      heavyHammer: {
+        name: 'Heavy hammer',
+        damage: 8,
+        edge: 11,
+        injury: 14,
+        calledShot: 'tor1e.weapons.calledShots.break-shield',
+      },
     },
-    broadheadedSpear: {
-      name: 'Broad-headed spear',
-      damage: 5,
-      edge: 10,
-      injury: 12,
-      calledShot: 'tor1e.weapons.calledShots.pierce',
+    // Wolvish Weapons
+    wolf: {
+      bite: {
+        name: 'Bite',
+        damage: npcData.data.attributeLevel.value,
+        edge: 10,
+        injury: 14,
+        calledShot: 'tor1e.weapons.calledShots.pierce',
+      },
+      rend: {
+        name: 'Rend',
+        damage: npcData.data.attributeLevel.value,
+        edge: 11,
+        injury: 14,
+        calledShot: '',
+      },
     },
-    jaggedKnife: {
-      name: 'Jagged knife',
-      damage: 3,
-      edge: 11,
-      injury: 14,
-      calledShot: '-',
-    },
-    heavyScimitar: {
-      name: 'Heavy scimitar (2h)',
-      damage: 7,
-      edge: 10,
-      injury: 14,
-      calledShot: 'tor1e.weapons.calledShots.breakShield',
-    },
-    orcAxe: {
-      name: 'Orc-axe',
-      damage: 5,
-      edge: 11,
-      injury: 16,
-      calledShot: 'tor1e.weapons.calledShots.breakShield',
-    },
-    spear: {
-      name: 'Spear',
-      damage: 4,
-      edge: 9,
-      injury: 12,
-      calledShot: 'tor1e.weapons.calledShots.pierce',
+    // Vampiric Weapons
+    vampire: {
+      bite: {
+        name: 'Bite',
+        damage: npcData.data.attributeLevel.value,
+        edge: 11,
+        injury: 16,
+        calledShot: 'tor1e.weapons.calledShots.pierce',
+      },
+      rake: {
+        name: 'Rake',
+        damage: npcData.data.attributeLevel.value,
+        edge: 11,
+        injury: 14,
+        calledShot: '',
+      },
     },
   };
 
-  try {
+  function searchWeapons(creatureType) {
     const weaponSkillsArr = originalText
       .match(/WEAPON SKILLS\n(.*)SPECIAL ABILITIES/is)[0]
       .replace(/WEAPON SKILLS\n/i, '')
@@ -229,7 +359,7 @@ export async function tor1eParser(input) {
       const name = element.match(/\D*(\dh)*\D*/)[0].trim();
       const skill = element.match(/\d+/)[0];
 
-      Object.values(adversaryWeapons).forEach(element => {
+      Object.values(creatureType).forEach(element => {
         if (name === element.name) {
           const damage = element.damage;
           const edge = element.edge;
@@ -250,26 +380,21 @@ export async function tor1eParser(input) {
           ]);
         }
       });
-
-      // const name = element.name;
-      // const damage = element.damage;
-      // const edge = element.edge;
-      // const injury = element.injury;
-      // const calledShot = element.calledShot;
-
-      // actor.createEmbeddedDocuments('Item', [
-      //   buildItem(
-      //     name,
-      //     'weapon',
-      //     '',
-      //     Number(skill),
-      //     damage,
-      //     injury,
-      //     0,
-      //     calledShot
-      //   ),
-      // ]);
     });
+  }
+
+  try {
+    if (/orc|messenger|snaga|uruk|goblin/i.test(npcData.name)) {
+      searchWeapons(adversaryWeapons.orc);
+    } else if (/attercop|spider/i.test(npcData.name)) {
+      searchWeapons(adversaryWeapons.spider);
+    } else if (/troll/i.test(npcData.name)) {
+      searchWeapons(adversaryWeapons.troll);
+    } else if (/wolf|hound/i.test(npcData.name)) {
+      searchWeapons(adversaryWeapons.wolf);
+    } else if (/bat|secret shadow/i.test(npcData.name)) {
+      searchWeapons(adversaryWeapons.vampire);
+    }
   } catch (error) {
     console.error(error);
     ui.notifications.warn(
@@ -334,172 +459,46 @@ export async function tor1eParser(input) {
   }
 
   ///// FELL ABILITIES BY TYPE /////
-  if (/Orc|Goblin|Uruk|Snaga|Lugburz|Hags|Pale Ones/i.test(npcData.name)) {
-    if (statblockFormat === 'crb') {
-      actor.createEmbeddedDocuments('Item', [
-        buildItem(
-          'Hatred (subject)',
-          'fell-ability',
-          'Not all orcs have this ability, but the LM may add it if they desire. Simply remove if not desired. Description can be found on page 148 of the Core Rule Book.'
-        ),
-      ]);
-      actor.createEmbeddedDocuments('Item', [
-        buildItem(
-          'Hate Sunlight',
-          'fell-ability',
-          'Description can be found on page 148 of the Core Rule Book.'
-        ),
-      ]);
-      ui.notifications.info(
-        'Hatred (subject) and Hate Sunlight ' +
-          game.i18n.localize(
-            'TOR1E-NPC-PARSER.notifications.fellAbilitiesByType'
-          )
-      );
-    } else if (statblockFormat === 'adversary-conversion') {
-      actor.createEmbeddedDocuments('Item', [
-        buildItem(
-          'Hatred (subject)',
-          'fell-ability',
-          'Description can be found on page 4  of the Adversary Conversion pdf.'
-        ),
-      ]);
-      ui.notifications.info(
-        'Hatred (subject) ' +
-          game.i18n.localize(
-            'TOR1E-NPC-PARSER.notifications.fellAbilitiesByType'
-          )
-      );
-    }
-  } else if (/Troll|Ettins|Ogre/i.test(npcData.name)) {
-    actor.createEmbeddedDocuments('Item', [
-      buildItem(
-        'Hideous Toughness',
-        'fell-ability',
-        'Description can be found on page 151 of the Core Rule Book or page 8 of the Adversary Conversion pdf.'
-      ),
-    ]);
-    actor.createEmbeddedDocuments('Item', [
-      buildItem(
-        'Dull-witted',
-        'fell-ability',
-        'Description can be found on page 151 of the Core Rule Book or page 8 of the Adversary Conversion pdf.'
-      ),
-    ]);
-    ui.notifications.info(
-      'Hideous Toughness and Dull-witted ' +
-        game.i18n.localize('TOR1E-NPC-PARSER.notifications.fellAbilitiesByType')
-    );
-  } else if (/Wight|Marsh|Wraith|Bog Soldiers|Spectres/i.test(npcData.name)) {
-    actor.createEmbeddedDocuments('Item', [
-      buildItem(
-        'Deathless',
-        'fell-ability',
-        'Description can be found on page 154'
-      ),
-    ]);
-    actor.createEmbeddedDocuments('Item', [
-      buildItem(
-        'Heartless',
-        'fell-ability',
-        'Description can be found on page 154'
-      ),
-    ]);
-    actor.createEmbeddedDocuments('Item', [
-      buildItem(
-        'Strike Fear',
-        'fell-ability',
-        'Description can be found on page 154'
-      ),
-    ]);
-    ui.notifications.info(
-      'Deathless, Heartless, and Strike Fear ' +
-        game.i18n.localize('TOR1E-NPC-PARSER.notifications.fellAbilitiesByType')
-    );
-  } else if (/Wolf|Hound/i.test(npcData.name)) {
-    actor.createEmbeddedDocuments('Item', [
-      buildItem(
-        'Great Leap',
-        'fell-ability',
-        'Description can be found on page 156'
-      ),
-    ]);
-    ui.notifications.info(
-      'Great Leap ' +
-        game.i18n.localize('TOR1E-NPC-PARSER.notifications.fellAbilitiesByType')
-    );
-  } else if (/Attercop|Spider/i.test(npcData.name)) {
-    actor.createEmbeddedDocuments('Item', [
-      buildItem(
-        'Poison',
-        'fell-ability',
-        'If a Sting attack results in a Wound, the target is also poisoned.'
-      ),
-    ]);
-    actor.createEmbeddedDocuments('Item', [
-      buildItem(
-        'Web',
-        'fell-ability',
-        'If and attack with the Web quality successfully hits a target, that target is webbed and unable to move. The webbed target cannot change stance and suffers –4 to their Parry rating. The webbed target may free themselves by succeeding on an ATHLETICS roll.'
-      ),
-    ]);
-    ui.notifications.info(
-      'Poison and Web ' +
-        game.i18n.localize('TOR1E-NPC-PARSER.notifications.fellAbilitiesByType')
-    );
-  } else if (/Bat|Shadow/i.test(npcData.name)) {
-    actor.createEmbeddedDocuments('Item', [
-      buildItem(
-        'Hate Sunlight',
-        'fell-ability',
-        'The creature loses 1 Hate at the start of each round it is exposed to the full light of the sun.'
-      ),
-    ]);
-    actor.createEmbeddedDocuments('Item', [
-      buildItem(
-        'Denizen of the Dark',
-        'fell-ability',
-        'All attack rolls are Favoured while in darkness.'
-      ),
-    ]);
-    actor.createEmbeddedDocuments('Item', [
-      buildItem(
-        'Fell Speed',
-        'fell-ability',
-        'At the beginning of each turn, this creature can choose which hero it engages regardless of restrictions, or it can abandon combat entirely.'
-      ),
-    ]);
-    ui.notifications.info(
-      'Hate Sunlight, Deizen of the Dark, and Fell Speed ' +
-        game.i18n.localize('TOR1E-NPC-PARSER.notifications.fellAbilitiesByType')
-    );
-  } else if (/Huorns/i.test(npcData.name)) {
-    actor.createEmbeddedDocuments('Item', [
-      buildItem(
-        'Wandering Huorn',
-        'fell-ability',
-        'A wandering Huorn is most often a young tree whose heart darkened rapidly, and who is still quick of limb and root. (The Huorn template below is a Wandering Huorn).'
-      ),
-    ]);
-    actor.createEmbeddedDocuments('Item', [
-      buildItem(
-        'Denizen of the Dark',
-        'fell-ability',
-        'A dark-hearted Huorn may be a young tree awakened by a deep hatred, or an ancient monster brooding since uncounted centuries. (Increase Endurance by 15, Add +2 Hate Score, Add +1 Armor, Add +1 to Bough Lash Rating, Add Fell Ability Horrible Strength).'
-      ),
-    ]);
-    actor.createEmbeddedDocuments('Item', [
-      buildItem(
-        'Fell Speed',
-        'fell-ability',
-        'A dark-hearted Huorn may be a young tree awakened by a deep hatred, or an ancient monster brooding since uncounted centuries. (Increase Endurance by 25, Add +3 Hate Score, Add +1 to Bough Lash Rating, Remove Fell Ability Hatred, Add Fell Abilities Horrible Strength, Strike Fear, and Thick Hide).'
-      ),
-    ]);
-    ui.notifications.info(
-      'Wandering Huorn, Denizen of the Dark, and Fell Speed ' +
-        game.i18n.localize('TOR1E-NPC-PARSER.notifications.fellAbilitiesByType')
-    );
-  }
+  // if (/Orc|Goblin|Uruk|Snaga|Lugburz|Hags|Pale Ones/i.test(npcData.name)) {
+  //   ui.notifications.info(
+  //     'Hatred (subject) ' +
+  //       game.i18n.localize('TOR1E-NPC-PARSER.notifications.fellAbilitiesByType')
+  //   );
+  // } else if (/Troll|Ettins|Ogre/i.test(npcData.name)) {
+  //   ui.notifications.info(
+  //     'Hideous Toughness and Dull-witted ' +
+  //       game.i18n.localize('TOR1E-NPC-PARSER.notifications.fellAbilitiesByType')
+  //   );
+  // } else if (/Wight|Marsh|Wraith|Bog Soldiers|Spectres/i.test(npcData.name)) {
+  //   ui.notifications.info(
+  //     'Deathless, Heartless, and Strike Fear ' +
+  //       game.i18n.localize(
+  //         'TOR1E-NPC-PARSER.notifications.specialAbilitiesByType'
+  //       )
+  //   );
+  // } else if (/Wolf|Hound/i.test(npcData.name)) {
+  //   ui.notifications.info(
+  //     'Great Leap ' +
+  //       game.i18n.localize('TOR1E-NPC-PARSER.notifications.fellAbilitiesByType')
+  //   );
+  // } else if (/Attercop|Spider/i.test(npcData.name)) {
+  //   ui.notifications.info(
+  //     'Poison and Web ' +
+  //       game.i18n.localize(
+  //         'TOR1E-NPC-PARSER.notifications.specialAbilitiesByType'
+  //       )
+  //   );
+  // } else if (/Bat|Shadow/i.test(npcData.name)) {
+  //   ui.notifications.info(
+  //     'Hate Sunlight, Deizen of the Dark, and Fell Speed ' +
+  //       game.i18n.localize('TOR1E-NPC-PARSER.notifications.fellAbilitiesByType')
+  //   );
+  // } else if (/Huorns/i.test(npcData.name)) {
+  //   ui.notifications.info(
+  //     'Wandering Huorn, Denizen of the Dark, and Fell Speed ' +
+  //       game.i18n.localize('TOR1E-NPC-PARSER.notifications.fellAbilitiesByType')
+  //   );
+  // }
 
   // Makes sure the actor has the latest data added.
   actor.update(npcData);

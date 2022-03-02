@@ -144,18 +144,18 @@ export function buildItem(
     weaponData.data.skill.value = skill;
     weaponData.data.damage.value = damage;
     weaponData.data.injury.value = injury;
-    weaponData.data.group.value = calledShot;
+    weaponData.data.calledShot.value = calledShot;
     weaponData.data.edge.value = edge;
     // Choose correct image and group
-    if (/axe|cudgel|knife|club|hammer/i.test(name)) {
+    if (/axe|club|cudgel|hammer|knife/i.test(name)) {
       weaponData.img =
         'systems/tor1e/assets/images/icons/adversary_weapon_close.png';
-      weaponData.data.group.value = 'tor1e.weapons.groups.brawling';
+      weaponData.data.group.value = 'tor1e.weapons.groups.axes';
     } else if (/bow/i.test(name)) {
       weaponData.img =
         'systems/tor1e/assets/images/icons/adversary_weapon_ranged.png';
       weaponData.data.group.value = 'tor1e.weapons.groups.bows';
-    } else if (/crush|bite|touch|claws|fangs/i.test(name)) {
+    } else if (/bite|crush|ensnare|rake|rend|sting/i.test(name)) {
       weaponData.img =
         'systems/tor1e/assets/images/icons/adversary_weapon_bestial.png';
       weaponData.data.group.value = 'tor1e.weapons.groups.bestial';
@@ -163,7 +163,7 @@ export function buildItem(
       weaponData.img =
         'systems/tor1e/assets/images/icons/adversary_weapon-spear.png';
       weaponData.data.group.value = 'tor1e.weapons.groups.spears';
-    } else if (/sword|scimitar|blade/i.test(name)) {
+    } else if (/blade|scimitar|sword/i.test(name)) {
       weaponData.img =
         'systems/tor1e/assets/images/icons/adversary_weapon-scimitar.png';
       weaponData.data.group.value = 'tor1e.weapons.groups.swords';
