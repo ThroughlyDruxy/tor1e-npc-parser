@@ -1,4 +1,5 @@
 import { buildItem } from './buildItem.js';
+// import { Tor1eNpcSheet } from '/systems/tor1e/modules/sheets/actors/Tor1eNpcSheet.js';
 
 ///// Parser /////
 export async function tor1eParser(input) {
@@ -458,48 +459,11 @@ export async function tor1eParser(input) {
     );
   }
 
-  ///// FELL ABILITIES BY TYPE /////
-  // if (/Orc|Goblin|Uruk|Snaga|Lugburz|Hags|Pale Ones/i.test(npcData.name)) {
-  //   ui.notifications.info(
-  //     'Hatred (subject) ' +
-  //       game.i18n.localize('TOR1E-NPC-PARSER.notifications.fellAbilitiesByType')
-  //   );
-  // } else if (/Troll|Ettins|Ogre/i.test(npcData.name)) {
-  //   ui.notifications.info(
-  //     'Hideous Toughness and Dull-witted ' +
-  //       game.i18n.localize('TOR1E-NPC-PARSER.notifications.fellAbilitiesByType')
-  //   );
-  // } else if (/Wight|Marsh|Wraith|Bog Soldiers|Spectres/i.test(npcData.name)) {
-  //   ui.notifications.info(
-  //     'Deathless, Heartless, and Strike Fear ' +
-  //       game.i18n.localize(
-  //         'TOR1E-NPC-PARSER.notifications.specialAbilitiesByType'
-  //       )
-  //   );
-  // } else if (/Wolf|Hound/i.test(npcData.name)) {
-  //   ui.notifications.info(
-  //     'Great Leap ' +
-  //       game.i18n.localize('TOR1E-NPC-PARSER.notifications.fellAbilitiesByType')
-  //   );
-  // } else if (/Attercop|Spider/i.test(npcData.name)) {
-  //   ui.notifications.info(
-  //     'Poison and Web ' +
-  //       game.i18n.localize(
-  //         'TOR1E-NPC-PARSER.notifications.specialAbilitiesByType'
-  //       )
-  //   );
-  // } else if (/Bat|Shadow/i.test(npcData.name)) {
-  //   ui.notifications.info(
-  //     'Hate Sunlight, Deizen of the Dark, and Fell Speed ' +
-  //       game.i18n.localize('TOR1E-NPC-PARSER.notifications.fellAbilitiesByType')
-  //   );
-  // } else if (/Huorns/i.test(npcData.name)) {
-  //   ui.notifications.info(
-  //     'Wandering Huorn, Denizen of the Dark, and Fell Speed ' +
-  //       game.i18n.localize('TOR1E-NPC-PARSER.notifications.fellAbilitiesByType')
-  //   );
-  // }
-
-  // Makes sure the actor has the latest data added.
+  // Makes sure the actor has the latest data added and displays the new sheet.
   actor.update(npcData);
+  const torSheet = Actors.registeredSheets.find(
+    x => x.name === 'Tor1eAdversarySheet'
+  );
+  const sheet = new torSheet(actor);
+  sheet.render(true);
 }
