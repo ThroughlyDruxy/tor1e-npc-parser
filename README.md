@@ -13,7 +13,9 @@ This module allows for copy and pasting a statblock directly from the book to cr
 It is somewhat tested and should work for all of the adversaries in the Core Rule Book. Support for other supplements will be coming in the future. If you have a particular book you'd like prioritized create an issue here on Github requesting it and I'll see what I can do. Additionally you can DM me on discord @ ThroughlyDruxy#4390.
 
 ## Known Issues
-Unfortunatly due to how the data is copied, the underlining to indicate something is favoured is not transferred over. So after copying, make sure to go through and favour the items that should be favoured.
+* Unfortunatly due to how the data is copied, the underlining to indicate something is favoured is not transferred over. So after copying, make sure to go through and favour the items that should be favoured.
+* Due to how special abilities are parsed sometimes one ability will parse as two (such as Great Size causing both Great Size and Great Leap to be added). This is known so please always double check the special abilities and notify me (discord or an issue on github) of which statblock, which abilities and as much detail as possible.
+* Only creatures from Core Rules will be parsed correctly right now as stated above. The selection will be expanded in the future.
 
 ## License
 
