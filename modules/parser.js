@@ -384,13 +384,13 @@ export async function tor1eParser(input) {
   }
 
   try {
-    if (/orc|messenger|snaga|uruk|goblin/i.test(npcData.name)) {
+    if (/goblin|messenger|orc|snaga|uruk/i.test(npcData.name)) {
       searchWeapons(adversaryWeapons.orc);
     } else if (/attercop|spider/i.test(npcData.name)) {
       searchWeapons(adversaryWeapons.spider);
     } else if (/troll/i.test(npcData.name)) {
       searchWeapons(adversaryWeapons.troll);
-    } else if (/wolf|hound/i.test(npcData.name)) {
+    } else if (/hound|wolf/i.test(npcData.name)) {
       searchWeapons(adversaryWeapons.wolf);
     } else if (/bat|secret shadow/i.test(npcData.name)) {
       searchWeapons(adversaryWeapons.vampire);
