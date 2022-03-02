@@ -4,14 +4,16 @@ Install from FoundryVTT setup / Add-on modules / Install module with Manifest UR
 
 ## Description
 
-This module allow for copy and pasting a statblock directly from the book to create a adversary character sheet.
+This module allows for copy and pasting a statblock directly from the book to create a adversary character sheet.
 
 1. Navigate to actor tab in the sidebar and at the bottle will be a new button called "Parse Statblock". Click that.
-2. A textbox will open. Copy directly from the PDF starting at the creatures name before the description and through till the final Fell ability.
-3. Choose "Core Rules" or "Adversary Conversion.pdf" from the drop down based on where it was copied from.
+2. A textbox will open. Copy directly from the PDF starting at the creatures name through till the final special ability. If no description exists copy from the creatures name.
 4. Paste it into the textbox and hit Go.
 
-This is currently in Alpha and my first project in JavaScript so please be patient. It is somewhat tested and should work for all of the adversaries in the Core Rule Book. Be sure to start the copying from the name in big red letters (but not all caps) below the red line, then select to the end of Fell abilities. If nothing happens, hit F12 and check the log for errors. Please report any errors on this page in the issues section or DM me on discord at ThroughlyDruxy#4390.
+It is somewhat tested and should work for all of the adversaries in the Core Rule Book. Support for other supplements will be coming in the future. If you have a particular book you'd like prioritized create an issue here on Github requesting it and I'll see what I can do. Additionally you can DM me on discord @ ThroughlyDruxy#4390.
+
+## Known Issues
+Unfortunatly due to how the data is copied, the underlining to indicate something is favoured is not transferred over. So after copying, make sure to go through and favour the items that should be favoured.
 
 ## License
 
