@@ -15,9 +15,7 @@ It is somewhat tested and should work for all of the adversaries in the Core Rul
 
 ## Known Issues
 * Unfortunately due to how the data is copied, the underlining to indicate something is favoured is not transferred over. So after copying, make sure to go through and favour the items that should be favoured.
-* Due to how special abilities are parsed sometimes one ability will parse as two (such as Great Size causing both Great Size and Great Leap to be added). This is known so please always double check the special abilities and notify me (discord or an issue on github) of which statblock, which abilities and as much detail as possible.
 * Only creatures from Core Rules will be parsed correctly right now as stated above. The selection will be expanded in the future.
-* Special Abilities that include a TN (such as Thing of Terror) are not currently parsed.
 
 ## License
 The One Ring, Middle-­earth, and The Lord of the Rings and the characters, items, events, and places therein are trademarks or registered trademarks of the Saul Zaentz Company d/b/a Middle-­earth Enterprises (SZC) and are used under license by Sophisticated Games Ltd. and their respective licensees. All rights reserved.

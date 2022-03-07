@@ -7,7 +7,8 @@ export function buildItem(
   injury,
   protection,
   calledShot,
-  edge
+  edge,
+  twoHandWeapon
 ) {
   console.log(`TOR 1E NPC PARSER | started buildItem() with ${name}`);
   const distinctiveFeatureData = {
@@ -146,8 +147,9 @@ export function buildItem(
     weaponData.data.injury.value = injury;
     weaponData.data.calledShot.value = calledShot;
     weaponData.data.edge.value = edge;
+    weaponData.data.twoHandWeapon.value = twoHandWeapon;
     // Choose correct image and group
-    if (/axe|club|cudgel|hammer|knife/i.test(name)) {
+    if (/axe|club|cudgel|dagger|hammer|knife|mattock/i.test(name)) {
       weaponData.img =
         'systems/tor1e/assets/images/icons/adversary_weapon_close.png';
       weaponData.data.group.value = 'tor1e.weapons.groups.axes';
@@ -155,7 +157,7 @@ export function buildItem(
       weaponData.img =
         'systems/tor1e/assets/images/icons/adversary_weapon_ranged.png';
       weaponData.data.group.value = 'tor1e.weapons.groups.bows';
-    } else if (/bite|crush|ensnare|rake|rend|sting/i.test(name)) {
+    } else if (/beak|bite|claw|crush|ensnare|rake|rend|sting/i.test(name)) {
       weaponData.img =
         'systems/tor1e/assets/images/icons/adversary_weapon_bestial.png';
       weaponData.data.group.value = 'tor1e.weapons.groups.bestial';

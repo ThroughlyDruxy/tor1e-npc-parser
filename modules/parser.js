@@ -1,5 +1,5 @@
 import { buildItem } from './buildItem.js';
-// import { Tor1eNpcSheet } from '/systems/tor1e/modules/sheets/actors/Tor1eNpcSheet.js';
+import { searchWeapons } from './searchWeapons.js';
 
 ///// Parser /////
 export async function tor1eParser(input) {
@@ -204,8 +204,105 @@ export async function tor1eParser(input) {
 
   ///// WEAPON SKILLS /////
   console.log(`TOR 1E NPC PARSER | parsing Weapon Skills`);
-
+  // Object containing all adversary weapons stats
   const adversaryWeapons = {
+    // Men Weapons
+    baseWeapons: {
+      Axe: {
+        name: 'Axe',
+        damage: 5,
+        edge: 11,
+        injury: 18,
+        calledShot: 'tor1e.weapons.calledShots.break-shield',
+      },
+      bow: {
+        name: 'Bow',
+        damage: 5,
+        edge: 10,
+        injury: 14,
+        calledShot: 'tor1e.weapons.calledShots.pierce',
+      },
+      dagger: {
+        name: 'Dagger',
+        damage: 3,
+        edge: 11,
+        injury: 12,
+        calledShot: 'tor1e.weapons.calledShots.break-shield',
+      },
+      greatAxe: {
+        name: 'Great axe',
+        damage: 9,
+        edge: 11,
+        injury: 20,
+        calledShot: 'tor1e.weapons.calledShots.break-shield',
+        twoHandWeapon: true,
+      },
+      greatBow: {
+        name: 'Great bow',
+        damage: 7,
+        edge: 10,
+        injury: 16,
+        calledShot: 'tor1e.weapons.calledShots.pierce',
+      },
+      greatSpear: {
+        name: 'Great spear',
+        damage: 9,
+        edge: 9,
+        injury: 16,
+        calledShot: 'tor1e.weapons.calledShots.pierce',
+        twoHandWeapon: true,
+      },
+      longhaftedAxe: {
+        name: 'Long-hafted axe',
+        damage: 5,
+        edge: 11,
+        injury: 18,
+        calledShot: 'tor1e.weapons.calledShots.break-shield',
+      },
+      longSword: {
+        name: 'Long sword',
+        damage: 5,
+        edge: 10,
+        injury: 16,
+        calledShot: 'tor1e.weapons.calledShots.disarm',
+      },
+      mattock: {
+        name: 'Mattock',
+        damage: 8,
+        edge: 10,
+        injury: 18,
+        calledShot: 'tor1e.weapons.calledShots.break-shield',
+        twoHandWeapon: true,
+      },
+      shortSword: {
+        name: 'Short sword',
+        damage: 5,
+        edge: 10,
+        injury: 14,
+        calledShot: 'tor1e.weapons.calledShots.disarm',
+      },
+      spear: {
+        name: 'Spear',
+        damage: 5,
+        edge: 9,
+        injury: 14,
+        calledShot: 'tor1e.weapons.calledShots.pierce',
+      },
+      sword: {
+        name: 'Sword',
+        damage: 5,
+        edge: 10,
+        injury: 16,
+        calledShot: 'tor1e.weapons.calledShots.disarm',
+      },
+      savageHound: {
+        name: 'Savage Hound',
+        damage: 4,
+        edge: 11,
+        injury: 14,
+        calledShot: 'tor1e.weapons.calledShots.none',
+      },
+    },
     // Orc Weapons
     orc: {
       bentSword: {
@@ -244,11 +341,12 @@ export async function tor1eParser(input) {
         calledShot: '-',
       },
       heavyScimitar: {
-        name: 'Heavy scimitar (2h)',
+        name: 'Heavy scimitar',
         damage: 7,
         edge: 10,
         injury: 14,
         calledShot: 'tor1e.weapons.calledShots.break-shield',
+        twoHandWeapon: true,
       },
       orcAxe: {
         name: 'Orc-axe',
@@ -263,6 +361,30 @@ export async function tor1eParser(input) {
         edge: 9,
         injury: 12,
         calledShot: 'tor1e.weapons.calledShots.pierce',
+      },
+      stoneSpear: {
+        name: 'Stone spear',
+        damage: 4,
+        edge: 10,
+        injury: 12,
+        calledShot: 'tor1e.weapons.calledShots.pierce',
+      },
+    },
+    // Ringwraith Weapons
+    ringWraith: {
+      longSword: {
+        name: 'Long sword',
+        damage: 7,
+        edge: 11,
+        injury: 16,
+        calledShot: 'tor1e.weapons.calledShots.disarm',
+      },
+      claw: {
+        name: 'Claw',
+        damage: npcData.data.attributeLevel.value,
+        edge: 11,
+        injury: 16,
+        calledShot: '',
       },
     },
     // Spider Weapons
@@ -280,6 +402,27 @@ export async function tor1eParser(input) {
         edge: 10,
         injury: 14,
         calledShot: 'tor1e.weapons.calledShots.poison',
+      },
+      hunterBeak: {
+        name: 'Beak',
+        damage: 6,
+        edge: 11,
+        injury: 15,
+        calledShot: 'tor1e.weapons.calledShots.poison',
+      },
+      shelobBeak: {
+        name: 'Beak',
+        damage: npcData.data.attributeLevel.value,
+        edge: 8,
+        injury: 18,
+        calledShot: 'tor1e.weapons.calledShots.poison',
+      },
+      stomp: {
+        name: 'Stomp',
+        damage: npcData.data.attributeLevel.value,
+        edge: 11,
+        injury: 14,
+        calledShot: 'tor1e.weapons.calledShots.knock-down',
       },
     },
     // Troll Weapons
@@ -311,6 +454,14 @@ export async function tor1eParser(input) {
         edge: 11,
         injury: 14,
         calledShot: 'tor1e.weapons.calledShots.break-shield',
+      },
+      // Bree
+      trollKnife: {
+        name: 'Troll-knife',
+        damage: 5,
+        edge: 10,
+        injury: 14,
+        calledShot: '',
       },
     },
     // Wolvish Weapons
@@ -347,53 +498,73 @@ export async function tor1eParser(input) {
         calledShot: '',
       },
     },
+    // Undead Weapons
+    undead: {
+      stranglingClaws: {
+        name: 'Strangling Claws',
+        damage: 5,
+        edge: 11,
+        injury: 16,
+        calledShot: 'tor1e.weapons.calledShots.none',
+      },
+      greatAxe: {
+        name: 'Great axe',
+        damage: 9,
+        edge: 11,
+        injury: 20,
+        calledShot: 'tor1e.weapons.calledShots.break-shield',
+        twoHandWeapon: true,
+      },
+    },
+    // Dragon weapons
+    dragon: {
+      bite: {
+        name: 'Bite',
+        damage: 9,
+        edge: 9,
+        injury: 20,
+        calledShot: 'tor1e.weapons.calledShots.pierce',
+      },
+      crush: {
+        name: 'Crush',
+        damage: 14,
+        edge: 11,
+        injury: 16,
+        calledShot: 'tor1e.weapons.calledShots.none',
+      },
+    },
   };
 
-  function searchWeapons(creatureType) {
-    const weaponSkillsArr = originalText
-      .match(/WEAPON SKILLS\n(.*)SPECIAL ABILITIES/is)[0]
-      .replace(/WEAPON SKILLS\n/i, '')
-      .replace(/\nSPECIAL ABILITIES/i, '')
-      .split(/\n/);
-    weaponSkillsArr.forEach(element => {
-      const name = element.match(/\D*(\dh)*\D*/)[0].trim();
-      const skill = element.match(/\d+/)[0];
-
-      Object.values(creatureType).forEach(element => {
-        if (name === element.name) {
-          const damage = element.damage;
-          const edge = element.edge;
-          const injury = element.injury;
-          const calledShot = element.calledShot;
-          actor.createEmbeddedDocuments('Item', [
-            buildItem(
-              name,
-              'weapon',
-              '',
-              Number(skill),
-              damage,
-              injury,
-              0,
-              calledShot,
-              edge
-            ),
-          ]);
-        }
-      });
-    });
-  }
-
   try {
+    // Orc weapons
     if (/goblin|messenger|orc|snaga|uruk/i.test(npcData.name)) {
-      searchWeapons(adversaryWeapons.orc);
-    } else if (/attercop|spider/i.test(npcData.name)) {
-      searchWeapons(adversaryWeapons.spider);
+      searchWeapons(adversaryWeapons.orc, originalText, actor);
+      // Spider weapons
+    } else if (/attercop|sarqin|spider/i.test(npcData.name)) {
+      searchWeapons(adversaryWeapons.spider, originalText, actor);
+      // Troll weapons
     } else if (/troll/i.test(npcData.name)) {
-      searchWeapons(adversaryWeapons.troll);
+      searchWeapons(adversaryWeapons.troll, originalText, actor);
+      // Wolf weapons
     } else if (/hound|wolf/i.test(npcData.name)) {
-      searchWeapons(adversaryWeapons.wolf);
-    } else if (/bat|secret shadow/i.test(npcData.name)) {
-      searchWeapons(adversaryWeapons.vampire);
+      searchWeapons(adversaryWeapons.wolf, originalText, actor);
+      // Vampire weapons
+    } else if (/bat|secret shadow|vampire/i.test(npcData.name)) {
+      searchWeapons(adversaryWeapons.vampire, originalText, actor);
+      // Ringwraith weapons
+    } else if (
+      /lieutenant of dol|ghost of the forest|messenger of mordor/i.test(
+        npcData.name
+      )
+    ) {
+      searchWeapons(adversaryWeapons.ringWraith, originalText, actor);
+      // Undead weapons
+    } else if (/wight/i.test(npcData.name)) {
+      searchWeapons(adversaryWeapons.undead, originalText, actor);
+    } else if (/dragon/i.test(npcData.name)) {
+      searchWeapons(adversaryWeapons.dragon, originalText, actor);
+    } else {
+      searchWeapons(adversaryWeapons.baseWeapons, originalText, actor);
     }
   } catch (error) {
     console.error(error);
@@ -404,28 +575,20 @@ export async function tor1eParser(input) {
 
   ///// SPECIAL ABILITIES /////
   console.log(`TOR 1E NPC PARSER | parsing Special Abilities`);
+  // prettier-ignore
   const allSpecialAbilities = [
-    'Bewilder',
-    'Commanding voice',
-    'Craven',
-    'Denizen of the Dark',
-    'Dreadful Spells',
-    'Fear of Fire',
-    'Fell Speed',
-    'Foul Reek',
-    'Great Leap',
-    'Great Size',
-    'Hatred',
-    'Hate Sunlight',
-    'Hideous Toughness',
-    'Horrible Strength',
-    'No Quarter',
-    'Savage Assault',
-    'Seize Victim',
-    'Snake-like Speed',
-    'Strike Fear',
-    'Thick Hide',
+    // Core Rule Book
+    'Bewilder', 'Commanding voice', 'Craven', 'Denizen of the Dark', 'Dreadful Spells',
+    'Fear of Fire', 'Fell Speed', 'Foul Reek', 'Great Leap', 'Great Size', 'Hatred',
+    'Hate Sunlight', 'Hideous Toughness', 'Horrible Strength', 'No Quarter',
+    'Savage Assault', 'Seize Victim', 'Snake-like Speed', 'Strike Fear', 'Thick Hide',
     'Thing of Terror',
+    // Bree
+    'Deadly Misfortune', 'Reckless Hate', 'Defend Ally', 'Berserk Rage', 'Poisoned Weapons',
+    'Shade-caller', 'Ghost-form', 'Icy Touch', 'Lure of the Ring',
+    // Darkening of Mirkwood
+    'Black Breath', 'Deadly Voice', 'Dwimmerlaik', 'Mirkwood-dweller', 'Countless Children',
+    'Webs of Illusion', 'Many Poisons', 'Horror of the Wood', 'Beast-tamer', 'Weak Spot', 'Enthral'
   ];
 
   try {
@@ -436,6 +599,7 @@ export async function tor1eParser(input) {
       .toLowerCase();
 
     for (let i = 0; i < allSpecialAbilities.length; i++) {
+      const defaultTN = ' (TN 14)';
       const specialAbility = allSpecialAbilities[i];
       if (pastedSpecialAbilities.includes(specialAbility.toLowerCase())) {
         if (specialAbility === 'Hatred') {
@@ -470,11 +634,37 @@ export async function tor1eParser(input) {
               ),
             ]);
           } catch (error) {
-            const strikeFearTN = ' (TN 14)';
+            actor.createEmbeddedDocuments('Item', [
+              buildItem(
+                specialAbility + defaultTN,
+                'special-ability',
+                '',
+                0,
+                0,
+                0
+              ),
+            ]);
+          }
+        } else if (specialAbility === 'Thing of Terror') {
+          try {
+            const thingOfTerrorTN = pastedSpecialAbilities
+              .match(/Thing of Terror \(.+\)/i)[0]
+              .replace(/Thing of Terror/i, '');
 
             actor.createEmbeddedDocuments('Item', [
               buildItem(
-                specialAbility + strikeFearTN,
+                specialAbility + thingOfTerrorTN.toUpperCase(),
+                'special-ability',
+                '',
+                0,
+                0,
+                0
+              ),
+            ]);
+          } catch (error) {
+            actor.createEmbeddedDocuments('Item', [
+              buildItem(
+                specialAbility + defaultTN,
                 'special-ability',
                 '',
                 0,
@@ -506,4 +696,6 @@ export async function tor1eParser(input) {
   );
   const sheet = new torSheet(actor);
   sheet.render(true);
+
+  ui.notifications.info(gamei18n.localize('TOR1E-NPC-PARSER.notifications.'));
 }
