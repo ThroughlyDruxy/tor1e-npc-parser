@@ -11,11 +11,13 @@ This module allows for copy and pasting a statblock directly from the book to cr
 3. Be sure to include the name of the creature otherwise the weapons will not include the relevant weapon stats and will only include the name and skill pips.
 4. Paste it into the textbox and hit Go.
 
-It is somewhat tested and should work for all of the adversaries in the Core Rule Book. Support for other supplements will be coming in the future. If you have a particular book you'd like prioritized create an issue here on Github requesting it and I'll see what I can do. Additionally you can DM me on discord @ ThroughlyDruxy#4390.
+It is somewhat tested and should work for all of the adversaries in the Core Rule Book, Bree, and Darkening of Mirkwood. Support for other supplements will be coming in the future. If you have a particular book you'd like prioritized create an issue here on Github requesting it and I'll see what I can do. Additionally you can DM me on discord @ ThroughlyDruxy#4390.
 
 ## Known Issues
-* Unfortunately due to how the data is copied, the underlining to indicate something is favoured is not transferred over. So after copying, make sure to go through and favour the items that should be favoured.
-* Only creatures from Core Rules will be parsed correctly right now as stated above. The selection will be expanded in the future.
+
+- Unfortunately due to how the data is copied, the underlining to indicate something is favoured is not transferred over. So after copying, make sure to go through and favour the items that should be favoured.
+- Only creatures from Core Rules, Bree, and Darkening of Mirkwood will be parsed correctly right now as stated above. The selection will be expanded in the future.
 
 ## License
+
 The One Ring, Middle-­earth, and The Lord of the Rings and the characters, items, events, and places therein are trademarks or registered trademarks of the Saul Zaentz Company d/b/a Middle-­earth Enterprises (SZC) and are used under license by Sophisticated Games Ltd. and their respective licensees. All rights reserved.
