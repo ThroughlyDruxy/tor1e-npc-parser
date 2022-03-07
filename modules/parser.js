@@ -438,12 +438,56 @@ export async function tor1eParser(input) {
     for (let i = 0; i < allSpecialAbilities.length; i++) {
       const specialAbility = allSpecialAbilities[i];
       if (pastedSpecialAbilities.includes(specialAbility.toLowerCase())) {
-        console.log(
-          `special ability ${specialAbility} found in ${pastedSpecialAbilities}`
-        );
-        actor.createEmbeddedDocuments('Item', [
-          buildItem(specialAbility, 'special-ability', '', 0, 0, 0),
-        ]);
+        if (specialAbility === 'Hatred') {
+          const hatredSubject = pastedSpecialAbilities
+            .match(/Hatred \(.+\)/i)[0]
+            .replace(/Hatred/i, '');
+
+          actor.createEmbeddedDocuments('Item', [
+            buildItem(
+              specialAbility + hatredSubject,
+              'special-ability',
+              '',
+              0,
+              0,
+              0
+            ),
+          ]);
+        } else if (specialAbility === 'Strike Fear') {
+          try {
+            const strikeFearTN = pastedSpecialAbilities
+              .match(/Strike Fear \(.+\)/i)[0]
+              .replace(/Strike Fear/i, '');
+
+            actor.createEmbeddedDocuments('Item', [
+              buildItem(
+                specialAbility + strikeFearTN.toUpperCase(),
+                'special-ability',
+                '',
+                0,
+                0,
+                0
+              ),
+            ]);
+          } catch (error) {
+            const strikeFearTN = ' (TN 14)';
+
+            actor.createEmbeddedDocuments('Item', [
+              buildItem(
+                specialAbility + strikeFearTN,
+                'special-ability',
+                '',
+                0,
+                0,
+                0
+              ),
+            ]);
+          }
+        } else {
+          actor.createEmbeddedDocuments('Item', [
+            buildItem(specialAbility, 'special-ability', '', 0, 0, 0),
+          ]);
+        }
       }
     }
   } catch (error) {
@@ -457,9 +501,9 @@ export async function tor1eParser(input) {
 
   // Makes sure the actor has the latest data added and displays the new sheet.
   actor.update(npcData);
-  // const torSheet = Actors.registeredSheets.find(
-  //   x => x.name === 'Tor1eAdversarySheet'
-  // );
-  // const sheet = new torSheet(actor);
-  // sheet.render(true);
+  const torSheet = Actors.registeredSheets.find(
+    x => x.name === 'Tor1eAdversarySheet'
+  );
+  const sheet = new torSheet(actor);
+  sheet.render(true);
 }
