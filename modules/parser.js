@@ -696,6 +696,4 @@ export async function tor1eParser(input) {
   );
   const sheet = new torSheet(actor);
   sheet.render(true);
-
-  ui.notifications.info(gamei18n.localize('TOR1E-NPC-PARSER.notifications.'));
 }
