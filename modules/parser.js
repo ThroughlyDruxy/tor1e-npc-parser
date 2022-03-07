@@ -151,7 +151,6 @@ export async function tor1eParser(input) {
         buildItem('Shield', 'armour', '', 0, 0, 0, Number(shield)),
       ]);
     } catch (error) {
-      console.error(error);
       ui.notifications.warn(
         game.i18n.localize('TOR1E-NPC-PARSER.notifications.shieldNotFound')
       );
@@ -416,39 +415,36 @@ export async function tor1eParser(input) {
     'Foul Reek',
     'Great Leap',
     'Great Size',
-    'Hatred (subject)',
+    'Hatred',
     'Hate Sunlight',
     'Hideous Toughness',
     'Horrible Strength',
     'No Quarter',
     'Savage Assault',
     'Seize Victim',
-    'Snake-like speed',
+    'Snake-like Speed',
     'Strike Fear',
     'Thick Hide',
     'Thing of Terror',
   ];
 
   try {
-    const specialAbilitiesArr = originalText
+    const pastedSpecialAbilities = originalText
       .match(/SPECIAL ABILITIES.*/is)[0]
       .replace(/SPECIAL ABILITIES\n/is, '')
       .replace(/\n/, ' ')
-      .split(' '); // splits it into individual words.
+      .toLowerCase();
 
-    for (let i = 0; i < specialAbilitiesArr.length; i++) {
-      const abilitySubstring = specialAbilitiesArr[i];
-
-      allSpecialAbilities.forEach(element => {
-        const specialAbility = element;
-        if (specialAbility.includes(abilitySubstring)) {
-          if (specialAbility.indexOf(specialAbilitiesArr[i]) === 0) {
-            actor.createEmbeddedDocuments('Item', [
-              buildItem(specialAbility, 'special-ability', '', 0, 0, 0),
-            ]);
-          }
-        }
-      });
+    for (let i = 0; i < allSpecialAbilities.length; i++) {
+      const specialAbility = allSpecialAbilities[i];
+      if (pastedSpecialAbilities.includes(specialAbility.toLowerCase())) {
+        console.log(
+          `special ability ${specialAbility} found in ${pastedSpecialAbilities}`
+        );
+        actor.createEmbeddedDocuments('Item', [
+          buildItem(specialAbility, 'special-ability', '', 0, 0, 0),
+        ]);
+      }
     }
   } catch (error) {
     console.error(error);
@@ -461,9 +457,9 @@ export async function tor1eParser(input) {
 
   // Makes sure the actor has the latest data added and displays the new sheet.
   actor.update(npcData);
-  const torSheet = Actors.registeredSheets.find(
-    x => x.name === 'Tor1eAdversarySheet'
-  );
-  const sheet = new torSheet(actor);
-  sheet.render(true);
+  // const torSheet = Actors.registeredSheets.find(
+  //   x => x.name === 'Tor1eAdversarySheet'
+  // );
+  // const sheet = new torSheet(actor);
+  // sheet.render(true);
 }
