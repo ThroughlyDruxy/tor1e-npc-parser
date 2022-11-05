@@ -1,3 +1,6 @@
+## v0.2.1
+Updated max core version compatibility.
+
 ## v0.2.0
 Added support for all creatures in Bree and Darkening of Mirkwood
 

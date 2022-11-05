@@ -3,9 +3,9 @@
   "title": "TOR 1e NPC Parser",
   "description": "Creates an NPC adversary from a copy and pasted statblock. Tested with TOR 1e only.",
   "authors": ["ThroughlyDruxy"],
-  "version": "0.2.0",
+  "version": "0.2.1",
   "minimumCoreVersion": "9.249",
-  "compatibleCoreVersion": "9.000",
+  "compatibleCoreVersion": "10.000",
   "system": ["tor1e"],
   "languages": [
     {
