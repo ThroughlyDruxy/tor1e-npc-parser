@@ -1,3 +1,6 @@
+## v0.2.2
+Updated manifest to be compatible with V11
+
 ## v0.2.1
 Updated max core version compatibility.
 
