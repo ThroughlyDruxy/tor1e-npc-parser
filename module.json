@@ -8,7 +8,7 @@
       "flags": {}
     }
   ],
-  "version": "0.2.3",
+  "version": "0.2.6",
   "languages": [
     {
       "lang": "en",
@@ -20,7 +20,7 @@
   "esmodules": ["modules/main.js"],
   "url": "https://github.com/ThroughlyDruxy/tor1e-npc-parser",
   "manifest": "https://raw.githubusercontent.com/ThroughlyDruxy/tor1e-npc-parser/main/module.json",
-  "download": "https://github.com/ThroughlyDruxy/tor1e-npc-parser/releases/download/v0.2.3/tor1e-npc-parser.zip",
+  "download": "https://github.com/ThroughlyDruxy/tor1e-npc-parser/releases/download/v0.2.6/tor1e-npc-parser.zip",
   "id": "tor1e-npc-parser",
   "relationships": {
     "systems": [
@@ -36,7 +36,7 @@
   },
   "compatibility": {
     "minimum": 10,
-    "verified": "11.299",
+    "verified": "10.291",
     "maximum": 11
   }
 }

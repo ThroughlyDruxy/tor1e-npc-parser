@@ -1,3 +1,6 @@
+## v0.2.6
+Now it should finally work with both V10 and V11 of FoundryVTT.
+
 ## v0.2.2
 Updated manifest to be compatible with V11
 
