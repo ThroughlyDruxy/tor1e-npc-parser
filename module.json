@@ -8,7 +8,7 @@
       "flags": {}
     }
   ],
-  "version": "0.2.6",
+  "version": "0.2.7",
   "languages": [
     {
       "lang": "en",
@@ -17,9 +17,7 @@
       "flags": {}
     }
   ],
-  "esmodules": [
-    "modules/main.js"
-  ],
+  "esmodules": ["modules/main.js"],
   "url": "https://github.com/ThroughlyDruxy/tor1e-npc-parser",
   "manifest": "https://raw.githubusercontent.com/ThroughlyDruxy/tor1e-npc-parser/main/module.json",
   "download": "https://github.com/ThroughlyDruxy/tor1e-npc-parser/releases/download/v0.2.6/tor1e-npc-parser.zip",
@@ -31,14 +29,14 @@
         "type": "system",
         "manifest": "https://gitlab.com/herve.darritchon/foundryvtt-tor1e/-/raw/master/src/system.json",
         "compatibility": {
-          "verified": "2.1.3"
+          "verified": "2.1.4"
         }
       }
     ]
   },
   "compatibility": {
     "minimum": "10",
-    "verified": "10.291",
-    "maximum": "11"
+    "verified": "13.351",
+    "maximum": "13"
   }
 }
