@@ -1,3 +1,6 @@
+## v0.3.0
+Updated to work with Foundry V13. Remoeved compatibility for V10 and V11 due to lack of testing. If there are enough people using it, letme know and I can look into re-supporting V11 or V12.
+
 ## v0.2.6
 Now it should finally work with both V10 and V11 of FoundryVTT.
 
