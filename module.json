@@ -8,7 +8,7 @@
       "flags": {}
     }
   ],
-  "version": "0.2.7",
+  "version": "0.3.0",
   "languages": [
     {
       "lang": "en",
@@ -29,13 +29,13 @@
         "type": "system",
         "manifest": "https://gitlab.com/herve.darritchon/foundryvtt-tor1e/-/raw/master/src/system.json",
         "compatibility": {
-          "verified": "2.1.4"
+          "verified": "5.1.0"
         }
       }
     ]
   },
   "compatibility": {
-    "minimum": "10",
+    "minimum": "13",
     "verified": "13.351",
     "maximum": "13"
   }
