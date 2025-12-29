@@ -15,7 +15,7 @@ export function buildItem(
     name: '',
     type: 'trait',
     img: 'systems/tor1e/assets/images/icons/distinctive_feature.png',
-    data: {
+    system: {
       description: {
         value: '',
         type: 'String',
@@ -35,7 +35,7 @@ export function buildItem(
     name: '',
     type: 'special-ability',
     img: 'systems/tor1e/assets/images/icons/adversary_special-ability.png',
-    data: {
+    system: {
       description: {
         value: '',
         type: 'String',
@@ -60,7 +60,7 @@ export function buildItem(
     name: '',
     type: 'weapon',
     img: '',
-    data: {
+    system: {
       equipped: {
         value: false,
       },
@@ -114,7 +114,7 @@ export function buildItem(
     name: 'Armour',
     type: 'armour',
     img: 'systems/tor1e/assets/images/icons/adversary_armour.png',
-    data: {
+    system: {
       load: {
         value: 0,
       },
@@ -137,38 +137,39 @@ export function buildItem(
   } else if (type === 'special-ability') {
     specialAbilityData.name = name;
     specialAbilityData.type = type;
-    specialAbilityData.data.description.value = description;
+    specialAbilityData.system.description.value = description;
     return specialAbilityData;
   } else if (type === 'weapon') {
+    console.log('?????????????????????? -- Weapons -- ', weaponData);
     weaponData.name = name;
     weaponData.type = type;
-    weaponData.data.skill.value = skill;
-    weaponData.data.damage.value = damage;
-    weaponData.data.injury.value = injury;
-    weaponData.data.calledShot.value = calledShot;
-    weaponData.data.edge.value = edge;
-    weaponData.data.twoHandWeapon.value = twoHandWeapon;
+    weaponData.system.skill.value = skill;
+    weaponData.system.damage.value = damage;
+    weaponData.system.injury.value = injury;
+    weaponData.system.calledShot.value = calledShot;
+    weaponData.system.edge.value = edge;
+    weaponData.system.twoHandWeapon.value = twoHandWeapon;
     // Choose correct image and group
     if (/axe|club|cudgel|dagger|hammer|knife|mattock/i.test(name)) {
       weaponData.img =
         'systems/tor1e/assets/images/icons/adversary_weapon_close.png';
-      weaponData.data.group.value = 'tor1e.weapons.groups.axes';
+      weaponData.system.group.value = 'tor1e.weapons.groups.axes';
     } else if (/bow/i.test(name)) {
       weaponData.img =
         'systems/tor1e/assets/images/icons/adversary_weapon_ranged.png';
-      weaponData.data.group.value = 'tor1e.weapons.groups.bows';
+      weaponData.system.group.value = 'tor1e.weapons.groups.bows';
     } else if (/beak|bite|claw|crush|ensnare|rake|rend|sting/i.test(name)) {
       weaponData.img =
         'systems/tor1e/assets/images/icons/adversary_weapon_bestial.png';
-      weaponData.data.group.value = 'tor1e.weapons.groups.bestial';
+      weaponData.system.group.value = 'tor1e.weapons.groups.bestial';
     } else if (/spear/i.test(name)) {
       weaponData.img =
         'systems/tor1e/assets/images/icons/adversary_weapon-spear.png';
-      weaponData.data.group.value = 'tor1e.weapons.groups.spears';
+      weaponData.system.group.value = 'tor1e.weapons.groups.spears';
     } else if (/blade|scimitar|sword/i.test(name)) {
       weaponData.img =
         'systems/tor1e/assets/images/icons/adversary_weapon-scimitar.png';
-      weaponData.data.group.value = 'tor1e.weapons.groups.swords';
+      weaponData.system.group.value = 'tor1e.weapons.groups.swords';
     }
     return weaponData;
   } else if (type === 'armour') {
@@ -178,28 +179,28 @@ export function buildItem(
           break;
         case 1:
           armourData.name = 'Buckler';
-          armourData.data.group.value = 'shield';
-          armourData.data.protection.value = protection;
+          armourData.system.group.value = 'shield';
+          armourData.system.protection.value = protection;
           return armourData;
         case 2:
           armourData.name = 'Shield';
-          armourData.data.group.value = 'shield';
-          armourData.data.protection.value = protection;
+          armourData.system.group.value = 'shield';
+          armourData.system.protection.value = protection;
           return armourData;
         case 3:
           armourData.name = 'Great shield';
-          armourData.data.group.value = 'shield';
-          armourData.data.protection.value = protection;
+          armourData.system.group.value = 'shield';
+          armourData.system.protection.value = protection;
           return armourData;
       }
 
       armourData.name = '';
-      armourData.data.group.value = 'shield';
-      armourData.data.protection.value = protection;
+      armourData.system.group.value = 'shield';
+      armourData.system.protection.value = protection;
       return armourData;
     } else {
       armourData.name = 'Armour';
-      armourData.data.protection.value = protection;
+      armourData.system.protection.value = protection;
       return armourData;
     }
   } else {

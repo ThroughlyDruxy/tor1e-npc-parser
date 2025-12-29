@@ -12,7 +12,12 @@ export function searchWeapons(creatureType, originalText, actor) {
       const skill = element.match(/\d+/)[0];
 
       Object.values(creatureType).forEach(element => {
-        if (name === element.name) {
+        if (name.toUpperCase() === element.name.toUpperCase()) {
+          console.log(
+            '????????????????? building item named',
+            name,
+            element.name
+          );
           actor.createEmbeddedDocuments('Item', [
             buildItem(
               name,

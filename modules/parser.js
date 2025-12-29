@@ -12,7 +12,7 @@ export async function tor1eParser(input) {
     name: 'Generated Actor',
     type: 'adversary',
     img: 'systems/tor1e/assets/images/tokens/token_adversary.png',
-    data: {
+    system: {
       attributeLevel: {
         value: null,
       },
@@ -86,7 +86,7 @@ export async function tor1eParser(input) {
   console.log(`TOR 1E NPC PARSER | parsing Description`);
 
   try {
-    npcData.data.description.value = originalText
+    npcData.system.description.value = originalText
       .match(/:\n\D*/)[0]
       .replace(/\n/, '')
       .replace(/:/, '')
@@ -108,7 +108,7 @@ export async function tor1eParser(input) {
     const attributeLevel = originalText
       .match(/ATTRIBUTE LEVEL\n\d+/i)[0]
       .match(/\d+/)[0];
-    npcData.data.attributeLevel.value = Number(attributeLevel);
+    npcData.system.attributeLevel.value = Number(attributeLevel);
   } catch (error) {
     console.error(error);
     ui.notifications.warn(
@@ -116,7 +116,7 @@ export async function tor1eParser(input) {
         'TOR1E-NPC-PARSER.notifications.attributeLevelNotFound'
       )
     );
-    npcData.data.attributeLevel.value = 0;
+    npcData.system.attributeLevel.value = 0;
   }
 
   ///// ENDURANCE & HATE /////
@@ -125,17 +125,17 @@ export async function tor1eParser(input) {
       .match(/ENDURANCE HATE\n\d+ \d+/i)[0]
       .match(/\d+ \d+/)[0]
       .split(' ');
-    npcData.data.endurance.value = Number(endurance);
-    npcData.data.endurance.max = Number(endurance);
-    npcData.data.hate.value = Number(hate);
-    npcData.data.hate.max = Number(hate);
+    npcData.system.endurance.value = Number(endurance);
+    npcData.system.endurance.max = Number(endurance);
+    npcData.system.hate.value = Number(hate);
+    npcData.system.hate.max = Number(hate);
   } catch (error) {
     console.error(error);
     ui.notifications.warn(
       game.i18n.localize('TOR1E-NPC-PARSER.notifications.enduranceNotFound')
     );
-    npcData.data.endurance.value = 0;
-    npcData.data.endurance.max = 0;
+    npcData.system.endurance.value = 0;
+    npcData.system.endurance.max = 0;
   }
 
   ///// PARRY, SHIELD & ARMOUR /////
@@ -156,8 +156,8 @@ export async function tor1eParser(input) {
       );
     }
     const armour = parryShieldArmour.match(/\dd/)[0].replace(/d/, '');
-    npcData.data.parry.value = Number(parry);
-    npcData.data.parry.value = Number(parry);
+    npcData.system.parry.value = Number(parry);
+    npcData.system.parry.value = Number(parry);
     actor.createEmbeddedDocuments('Item', [
       buildItem('Armour', 'armour', '', 0, 0, 0, Number(armour)),
     ]);
@@ -166,33 +166,33 @@ export async function tor1eParser(input) {
     ui.notifications.warn(
       game.i18n.localize('TOR1E-NPC-PARSER.notifications.parryNotFound')
     );
-    npcData.data.parry.value = 0;
+    npcData.system.parry.value = 0;
   }
 
   ///// SKILLS /////
   try {
     // Personality
-    npcData.data.skills.personality.value = Number(
+    npcData.system.skills.personality.value = Number(
       originalText.match(/personality, \d/i)[0].replace(/personality, /i, '')
     );
     // Movement
-    npcData.data.skills.movement.value = Number(
+    npcData.system.skills.movement.value = Number(
       originalText.match(/movement, \d/i)[0].replace(/movement, /i, '')
     );
     // Perception
-    npcData.data.skills.perception.value = Number(
+    npcData.system.skills.perception.value = Number(
       originalText.match(/perception, \d/i)[0].replace(/perception, /i, '')
     );
     // Survival
-    npcData.data.skills.survival.value = Number(
+    npcData.system.skills.survival.value = Number(
       originalText.match(/survival, \d/i)[0].replace(/survival, /i, '')
     );
     // Custom
-    npcData.data.skills.custom.value = Number(
+    npcData.system.skills.custom.value = Number(
       originalText.match(/custom, \d/i)[0].replace(/custom, /i, '')
     );
     // Vocation
-    npcData.data.skills.vocation.value = Number(
+    npcData.system.skills.vocation.value = Number(
       originalText.match(/vocation, \d/i)[0].replace(/vocation, /i, '')
     );
   } catch (error) {
@@ -334,7 +334,7 @@ export async function tor1eParser(input) {
         calledShot: 'tor1e.weapons.calledShots.pierce',
       },
       jaggedKnife: {
-        name: 'Jagged knife',
+        name: 'Jagged Knife',
         damage: 3,
         edge: 11,
         injury: 14,
@@ -381,7 +381,7 @@ export async function tor1eParser(input) {
       },
       claw: {
         name: 'Claw',
-        damage: npcData.data.attributeLevel.value,
+        damage: npcData.system.attributeLevel.value,
         edge: 11,
         injury: 16,
         calledShot: '',
@@ -398,7 +398,7 @@ export async function tor1eParser(input) {
       },
       sting: {
         name: 'Sting',
-        damage: npcData.data.attributeLevel.value,
+        damage: npcData.system.attributeLevel.value,
         edge: 10,
         injury: 14,
         calledShot: 'tor1e.weapons.calledShots.poison',
@@ -412,14 +412,14 @@ export async function tor1eParser(input) {
       },
       shelobBeak: {
         name: 'Beak',
-        damage: npcData.data.attributeLevel.value,
+        damage: npcData.system.attributeLevel.value,
         edge: 8,
         injury: 18,
         calledShot: 'tor1e.weapons.calledShots.poison',
       },
       stomp: {
         name: 'Stomp',
-        damage: npcData.data.attributeLevel.value,
+        damage: npcData.system.attributeLevel.value,
         edge: 11,
         injury: 14,
         calledShot: 'tor1e.weapons.calledShots.knock-down',
@@ -443,7 +443,7 @@ export async function tor1eParser(input) {
       },
       crush: {
         name: 'Crush',
-        damage: npcData.data.attributeLevel.value,
+        damage: npcData.system.attributeLevel.value,
         edge: 11,
         injury: 12,
         calledShot: '',
@@ -468,14 +468,14 @@ export async function tor1eParser(input) {
     wolf: {
       bite: {
         name: 'Bite',
-        damage: npcData.data.attributeLevel.value,
+        damage: npcData.system.attributeLevel.value,
         edge: 10,
         injury: 14,
         calledShot: 'tor1e.weapons.calledShots.pierce',
       },
       rend: {
         name: 'Rend',
-        damage: npcData.data.attributeLevel.value,
+        damage: npcData.system.attributeLevel.value,
         edge: 11,
         injury: 14,
         calledShot: '',
@@ -485,14 +485,14 @@ export async function tor1eParser(input) {
     vampire: {
       bite: {
         name: 'Bite',
-        damage: npcData.data.attributeLevel.value,
+        damage: npcData.system.attributeLevel.value,
         edge: 11,
         injury: 16,
         calledShot: 'tor1e.weapons.calledShots.pierce',
       },
       rake: {
         name: 'Rake',
-        damage: npcData.data.attributeLevel.value,
+        damage: npcData.system.attributeLevel.value,
         edge: 11,
         injury: 14,
         calledShot: '',
@@ -540,7 +540,7 @@ export async function tor1eParser(input) {
     if (/goblin|messenger|orc|snaga|uruk/i.test(npcData.name)) {
       searchWeapons(adversaryWeapons.orc, originalText, actor);
       // Spider weapons
-    } else if (/attercop|sarqin|spider/i.test(npcData.name)) {
+    } else if (/attercop|sarqin|spider|tauler|tyulqin/i.test(npcData.name)) {
       searchWeapons(adversaryWeapons.spider, originalText, actor);
       // Troll weapons
     } else if (/troll/i.test(npcData.name)) {
@@ -691,7 +691,7 @@ export async function tor1eParser(input) {
 
   // Makes sure the actor has the latest data added and displays the new sheet.
   actor.update(npcData);
-  const torSheet = Actors.registeredSheets.find(
+  const torSheet = foundry.documents.collections.Actors.registeredSheets.find(
     x => x.name === 'Tor1eAdversarySheet'
   );
   const sheet = new torSheet(actor);

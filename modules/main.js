@@ -24,7 +24,7 @@ class ParserButtonVisible {
 async function textInputDialog() {
   console.log('textInputDialog() called');
 
-  const html = await renderTemplate(
+  const html = await foundry.applications.handlebars.renderTemplate(
     'modules/tor1e-npc-parser/templates/tor1e-npc-parser.hbs',
     {}
   );
@@ -63,7 +63,9 @@ async function textInputDialog() {
 }
 
 ///// HOOKS /////
-Hooks.on('renderSidebarTab', (app, html) => {
+
+/** Ensure the "Parse Statblock" button is visible, Foundry v13 and higher. */
+Hooks.on('renderActorDirectory', async (app, html) => {
   if (app.id == 'actors') {
     ParserButtonVisible.parserButtonVisible();
   }
