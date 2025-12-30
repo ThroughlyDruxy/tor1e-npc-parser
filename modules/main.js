@@ -24,7 +24,7 @@ class ParserButtonVisible {
 async function textInputDialog() {
   console.log('textInputDialog() called');
 
-  const html = await foundry.applications.handlebars.renderTemplate(
+  const html = await renderTemplate(
     'modules/tor1e-npc-parser/templates/tor1e-npc-parser.hbs',
     {}
   );

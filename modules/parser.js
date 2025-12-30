@@ -691,7 +691,7 @@ export async function tor1eParser(input) {
 
   // Makes sure the actor has the latest data added and displays the new sheet.
   actor.update(npcData);
-  const torSheet = foundry.documents.collections.Actors.registeredSheets.find(
+  const torSheet = Actors.registeredSheets.find(
     x => x.name === 'Tor1eAdversarySheet'
   );
   const sheet = new torSheet(actor);
