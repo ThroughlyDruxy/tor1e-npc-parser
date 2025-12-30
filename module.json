@@ -20,7 +20,7 @@
   "esmodules": ["modules/main.js"],
   "url": "https://github.com/ThroughlyDruxy/tor1e-npc-parser",
   "manifest": "https://raw.githubusercontent.com/ThroughlyDruxy/tor1e-npc-parser/main/module.json",
-  "download": "https://github.com/ThroughlyDruxy/tor1e-npc-parser/releases/download/v0.2.6/tor1e-npc-parser.zip",
+  "download": "https://github.com/ThroughlyDruxy/tor1e-npc-parser/releases/download/v0.3.1/tor1e-npc-parser.zip",
   "id": "tor1e-npc-parser",
   "relationships": {
     "systems": [
